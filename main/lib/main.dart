@@ -159,7 +159,7 @@ class DatabaseService {
     join(await getDatabasesPath(), 'tasks.db'),
     onCreate: (db, version){
       return db.execute(
-        'CREATE TABLE tasks(id INTEGER PRIMARY KEY, date DATE, task TEXT)',
+        'CREATE TABLE tasks(id INTEGER PRIMARY KEY, date DATE, task TEXT, priority TEXT)',
       );
     },
     version: 1,
