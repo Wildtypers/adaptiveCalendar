@@ -100,6 +100,7 @@ class _HomePageState extends State<MyHomePage>{
   Future<Tasks?> dialogBuilder(BuildContext context){
     final taskcontroller = TextEditingController();
     final dateController = TextEditingController();
+    final priorityController = TextEditingController();
     return showDialog<Tasks>(
       context: context,
       builder: (BuildContext context){
@@ -120,6 +121,13 @@ class _HomePageState extends State<MyHomePage>{
                 decoration: InputDecoration(
                   hintText:'Ex: 03/15/2026'
                 )
+              ),
+              TextField(
+                controller: priorityController,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  hintText:'Ex: Necessary'
+                )
               )
             ],
             ),
@@ -136,7 +144,8 @@ class _HomePageState extends State<MyHomePage>{
                 return Navigator.pop(
                     context, Tasks(
                       task: taskcontroller.text,
-                      date: dateController.text
+                      date: dateController.text,
+                      priority: priorityController.text
                     )
                   );
               },
@@ -173,8 +182,9 @@ class Tasks {
   final String task;
   final String date;
   final int? id;
+  final String priority;
 
-  Tasks({this.id, required this.date, required this.task});
+  Tasks({this.id, required this.date, required this.task, required this.priority});
 
   Map<String, Object?> toMap() {
     return {'task' : task, 'date' : date};
@@ -204,6 +214,7 @@ class Tasks {
           id: map['id'] as int,
           date: map['date'] as String, 
           task: map['task'] as String,
+          priority: map['priority'] as String
         )
     ];
   }
