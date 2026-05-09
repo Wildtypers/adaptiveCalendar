@@ -182,7 +182,7 @@ class Tasks {
   final String task;
   final String date;
   final int? id;
-  final String priority;
+  final String? priority;
 
   Tasks({this.id, required this.date, required this.task, required this.priority});
 
@@ -214,7 +214,7 @@ class Tasks {
           id: map['id'] as int,
           date: map['date'] as String, 
           task: map['task'] as String,
-          priority: map['priority'] as String
+          priority: map['priority'] as String?
         )
     ];
   }
