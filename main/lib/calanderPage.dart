@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 
 class calendarPage extends StatelessWidget{
@@ -19,6 +20,11 @@ class calendarPage extends StatelessWidget{
                  Navigator.pop(context);// Navigate to second route when tapped.
               },
             ),
+            TableCalendar(
+              firstDay: DateTime.utc(2000, 1, 1),
+              lastDay: DateTime.utc(2026, 12, 31),
+              focusedDay: DateTime.now(),
+            )
           ]
         )
       ),

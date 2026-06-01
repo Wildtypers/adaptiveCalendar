@@ -30,6 +30,7 @@ environment:
 dependencies:
   sqflite:
   path:
+  table_calendar:
   flutter:
     sdk: flutter
 
