@@ -1,0 +1,125 @@
+Flutter Folder Architecture
+Purpose
+
+The purpose of the Flutter folder architecture is to establish a scalable, maintainable, and organized project structure before development begins. As Predictive Planner is expected to grow from a simple MVP into a full-featured adaptive scheduling platform, the architecture must support future expansion without requiring significant restructuring.
+
+The chosen architecture emphasizes modularity, separation of concerns, and feature independence while remaining understandable for a solo developer learning Flutter.
+
+Architecture Goals
+
+The Flutter architecture was designed with the following primary objectives:
+
+Scalability – Support future features such as cloud synchronization, machine learning, and automatic scheduling without major architectural changes.
+Faster Feature Development – Keep all code related to a specific feature together so development and future enhancements are more efficient.
+Readability – Organize the codebase so that it is intuitive to navigate and understand, reducing development time and improving maintainability.
+
+As the application grows, new developers—or the original developer returning months later—should be able to quickly locate all code associated with a particular feature.
+
+Architectural Approach
+
+Predictive Planner will use a Feature-Based Clean Architecture.
+
+Rather than organizing files by type (such as placing all screens, models, or providers into separate top-level folders), the project will organize code by feature. Each feature contains its own presentation, business logic, and data access layers.
+
+This approach allows each feature to evolve independently and minimizes the impact of future changes.
+
+Why Feature-Based Organization
+
+A traditional folder structure groups files by type:
+
+screens/
+models/
+providers/
+widgets/
+
+As applications grow, related files become scattered throughout the project, making maintenance increasingly difficult.
+
+Predictive Planner instead groups files by feature:
+
+features/
+    tasks/
+    calendar/
+    prediction/
+    analytics/
+
+This organization keeps all functionality related to a feature in one location, making it easier to:
+
+Develop new functionality
+Debug issues
+Update existing features
+Understand the codebase
+Clean Architecture Strategy
+
+Clean Architecture separates the application into independent layers, ensuring each layer has a single responsibility.
+
+This separation allows individual components of the system to be modified without affecting unrelated parts of the application.
+
+For example, if the statistical prediction algorithm is replaced with a neural network in a future release, only the Prediction feature should require significant modification while the user interface, task management system, and calendar remain unchanged.
+
+Data Flow
+
+The application will follow a centralized data flow.
+
+User Creates Task
+        ↓
+Task Saved
+        ↓
+Calendar Updated
+        ↓
+Prediction Updated
+        ↓
+Analytics Updated
+
+This flow ensures that every completed task contributes to the adaptive learning system while maintaining a single source of truth for application data.
+
+Database Independence
+
+The architecture is designed to isolate data storage from the rest of the application.
+
+The MVP will use a local SQLite database through Drift. Future versions will introduce Supabase and PostgreSQL for cloud synchronization.
+
+Because database operations are isolated within the data layer, migrating from local storage to cloud storage should require minimal changes outside the data layer.
+
+This design reduces technical debt and supports long-term scalability.
+
+Future Expansion
+
+The selected architecture is intended to support future development without requiring major reorganization.
+
+Planned future modules include:
+
+Authentication
+Cloud Synchronization
+Google Calendar Integration
+Notifications
+Automatic Scheduling
+Machine Learning
+Goal Tracking
+
+Each feature can be added as its own module while preserving the existing project structure.
+
+Learning Considerations
+
+One objective of this project is to develop a deeper understanding of Flutter software architecture and engineering best practices.
+
+Although a simplified architecture would allow faster initial development, Predictive Planner will adopt a Feature-Based Clean Architecture from the beginning. This approach provides valuable experience with professional software engineering practices while creating a maintainable foundation for future development.
+
+As the developer gains experience with Flutter, the existing architecture will support continued expansion without requiring significant refactoring.
+
+Proposed Folder Structure
+lib/
+│
+├── core/
+│
+├── features/
+│   ├── tasks/
+│   ├── calendar/
+│   ├── prediction/
+│   ├── analytics/
+│   └── settings/
+│
+├── shared/
+│
+└── main.dart
+
+Each feature will contain its own presentation, business logic, and data layers, allowing features to remain modular and independent.
