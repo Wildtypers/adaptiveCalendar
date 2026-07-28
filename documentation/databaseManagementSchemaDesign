@@ -1,0 +1,459 @@
+Database Management Schema Design
+Purpose
+
+The purpose of the database management schema is to define the structure, organization, and relationships of data within Predictive Planner.
+
+The database serves as the foundation of the application by:
+
+Storing user tasks and scheduling information.
+Maintaining historical user behavior data.
+Supporting personalized prediction algorithms.
+Providing reliable data access for analytics and future machine learning models.
+
+The database is designed using a local-first approach, where data is stored locally during the MVP while maintaining a structure that supports future migration to cloud infrastructure.
+
+Database Technology
+MVP Database
+
+The application will use:
+
+Flutter Application
+
+        ↓
+
+Drift ORM
+
+        ↓
+
+SQLite Database
+Reason for Selection
+
+Drift and SQLite were selected because:
+
+The developer has previous experience with SQL and relational databases.
+Predictive Planner's data naturally follows relational relationships.
+SQL provides powerful querying capabilities for analytics and machine learning preparation.
+Drift provides type-safe database operations within Flutter.
+SQLite enables offline functionality.
+Future Database Migration
+
+The database is designed to support future migration to:
+
+Flutter Application
+
+        ↓
+
+Supabase
+
+        ↓
+
+PostgreSQL
+
+Future cloud migration will enable:
+
+Multi-device synchronization.
+User authentication.
+Cloud backups.
+Larger-scale data processing.
+Database Design Philosophy
+
+The database follows a balanced approach:
+
+Build a scalable foundation while avoiding unnecessary complexity during MVP development.
+
+The schema will only implement tables required for the current roadmap while ensuring future features can be added without major restructuring.
+
+Database Responsibilities
+
+The database serves five primary responsibilities:
+
+1. Data Storage
+
+Stores:
+
+User information
+Tasks
+Categories
+Preferences
+2. Source of Truth
+
+The database represents the current state of the application.
+
+All major application features retrieve information from the database rather than maintaining separate copies of data.
+
+3. Behavioral Learning
+
+Historical information is stored to allow the application to understand:
+
+How long users take on tasks.
+Which categories require more time.
+When users are most productive.
+4. Prediction Improvement
+
+The database stores prediction history to measure:
+
+Prediction accuracy.
+Model improvement.
+Algorithm performance.
+5. Analytics Generation
+
+Historical data supports future productivity insights including:
+
+Focus hours.
+Average completion time.
+Category performance.
+Deadline success rate.
+Entity Relationship Overview
+
+The MVP database contains five primary tables:
+
+Users
+
+ |
+ |
+ ├──────── Tasks
+ |             |
+ |             |
+ |             ├──────── Task Sessions
+ |             |
+ |             └──────── Prediction History
+ |
+ |
+ └──────── User Preferences
+
+
+Categories
+
+ |
+ |
+ └──────── Tasks
+Table Design
+1. Users Table
+Purpose
+
+Stores user account information and provides the foundation for future authentication and cloud synchronization.
+
+Fields
+Field	Type	Description
+User ID	Primary Key	Unique user identifier
+Email	String	User email
+Created At	Timestamp	Account creation date
+Last Active Date	Timestamp	Most recent app usage
+Design Decisions
+
+The MVP does not require full authentication but stores user information to support future account systems.
+
+2. Tasks Table
+Purpose
+
+The Tasks table is the central entity of Predictive Planner.
+
+It stores user-created tasks, scheduling information, initial estimates, and current task status.
+
+Fields
+Field	Type	Description
+Task ID	Primary Key	Unique task identifier
+User ID	Foreign Key	Task owner
+Category ID	Foreign Key	Associated category
+Task Name	String	Task title
+User Estimate	Integer	User estimated duration
+Predicted Duration	Integer	System prediction
+Deadline	Timestamp	Task deadline
+Priority	Integer (1-5)	Task importance
+Difficulty	Integer (1-100)	Task complexity
+Notes	Text	Additional information
+Scheduled Start Time	Timestamp	Calendar placement
+Scheduled End Time	Timestamp	Calendar placement
+Status	Enum	Task state
+Created At	Timestamp	Creation date
+Updated At	Timestamp	Last modification
+Task Status
+
+Tasks follow this lifecycle:
+
+Created
+
+↓
+
+Scheduled
+
+↓
+
+In Progress
+
+↓
+
+Completed
+
+↓
+
+Archived
+
+Additional state:
+
+Deleted
+Task Update Strategy
+
+When task information changes:
+
+The existing row is deleted and replaced with updated information.
+
+This prevents unnecessary historical clutter within the task table.
+
+Historical prediction information is preserved separately.
+
+3. Task Sessions Table
+Purpose
+
+Stores individual work sessions completed on tasks.
+
+Actual completion time is calculated from sessions instead of being stored directly.
+
+Example
+
+Task:
+
+Complete Programming Assignment
+
+Sessions:
+
+Monday:
+2 hours
+
+Tuesday:
+1 hour
+
+Wednesday:
+1.5 hours
+
+Total actual time:
+
+4.5 hours
+
+Calculated dynamically.
+
+Fields
+Field	Type	Description
+Session ID	Primary Key	Unique session identifier
+Task ID	Foreign Key	Associated task
+Start Time	Timestamp	Work session start
+End Time	Timestamp	Work session end
+Duration	Integer	Session duration
+Completed	Boolean	Whether session was completed
+Date Completed	Timestamp	Completion date
+Timer Decision
+
+Incomplete sessions will not be stored.
+
+Example:
+
+Start:
+10:00 AM
+
+End:
+NULL
+
+The application will discard the session instead of saving incomplete data.
+
+Manual Time Entry
+
+Users can manually enter completed work time.
+
+Manual entries will be stored as valid task sessions.
+
+4. Categories Table
+Purpose
+
+Stores user-defined categories and metadata used for prediction personalization.
+
+Fields
+Field	Type	Description
+Category ID	Primary Key	Unique category
+User ID	Foreign Key	Category owner
+Category Name	String	Category title
+Description	Text	Category explanation
+Prediction Multiplier	Float	Future prediction adjustment
+Created At	Timestamp	Creation date
+Updated At	Timestamp	Last modification
+Category Creation
+
+Categories support:
+
+User-created categories.
+AI-suggested categories.
+
+Example:
+
+Programming
+
+Description:
+Software development tasks
+
+Prediction Multiplier:
+1.4
+5. User Preferences Table
+Purpose
+
+Stores personalization settings.
+
+Fields
+Field	Type	Description
+User ID	Foreign Key	Associated user
+Preferred Working Hours	JSON	Preferred productivity times
+Productivity Goals	Text	User objectives
+Created At	Timestamp	Creation date
+Updated At	Timestamp	Last modification
+6. Prediction History Table
+Purpose
+
+Stores historical predictions to evaluate algorithm improvement.
+
+Fields
+Field	Type	Description
+Prediction ID	Primary Key	Unique prediction
+Task ID	Foreign Key	Associated task
+Algorithm Version	String	Prediction model version
+Predicted Duration	Integer	Generated prediction
+Actual Duration	Integer	Final calculated duration
+Prediction Error	Float	Difference between prediction and reality
+Created At	Timestamp	Prediction date
+Prediction Version Tracking
+
+The application will track different prediction algorithms.
+
+Example:
+
+Algorithm Version 1
+
+Prediction:
+5 hours
+
+
+Algorithm Version 2
+
+Prediction:
+4.2 hours
+
+This allows measurement of improvement over time.
+
+Database Relationships
+Users → Tasks
+
+Relationship:
+
+One User
+
+↓
+
+Many Tasks
+Tasks → Task Sessions
+
+Relationship:
+
+One Task
+
+↓
+
+Many Sessions
+Tasks → Prediction History
+
+Relationship:
+
+One Task
+
+↓
+
+Many Predictions
+Categories → Tasks
+
+Relationship:
+
+One Category
+
+↓
+
+Many Tasks
+Future Database Expansion
+
+The schema supports future additions.
+
+Recurring Tasks
+
+Future table:
+
+Recurring Task Template
+
+        ↓
+
+Generated Tasks
+Machine Learning Models
+
+Future additions:
+
+Model versions.
+Training datasets.
+Feature importance.
+Prediction metrics.
+Productivity Goals
+
+Future tables:
+
+Goals.
+Milestones.
+Progress tracking.
+Productivity Insights
+
+Future tables:
+
+Weekly summaries.
+Productivity trends.
+Performance reports.
+Data Flow
+
+The complete data flow is:
+
+User Creates Task
+
+        ↓
+
+Task Stored
+
+        ↓
+
+Prediction Generated
+
+        ↓
+
+Prediction History Stored
+
+        ↓
+
+Task Scheduled
+
+        ↓
+
+User Completes Sessions
+
+        ↓
+
+Actual Time Calculated
+
+        ↓
+
+Prediction Accuracy Updated
+
+        ↓
+
+Future Predictions Improve
+Final Schema Philosophy
+
+Predictive Planner's database is designed around adaptive learning.
+
+The system does not simply store tasks. It stores the relationship between:
+
+What the user expected.
+What actually happened.
+How the system predicted.
+How future predictions can improve.
+
+By preserving behavioral history while maintaining a simple relational structure, the database provides a strong foundation for evolving from an MVP productivity application into an intelligent adaptive scheduling platform.
