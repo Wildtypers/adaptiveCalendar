@@ -1,0 +1,74 @@
+Technology & Dependency Roadmap
+Phase 1 — Project Initialization (2.4)
+
+Install these immediately.
+
+Dependency	Purpose	Why Needed
+flutter_riverpod	State management	Share application state across screens.
+go_router	Navigation	Manage application routing and future deep linking.
+drift	Local database ORM	Persistent local SQL database.
+sqlite3_flutter_libs	SQLite runtime	Required for Drift.
+path_provider	Local storage paths	Locate the database file.
+path	File path utilities	Construct platform-independent paths.
+intl	Date and time formatting	Calendar, timers, and analytics.
+uuid	Unique identifiers	Future-proof task IDs for cloud synchronization.
+logging	Structured logging	Debugging and monitoring during development.
+Development Dependencies
+Dependency	Purpose
+build_runner	Code generation.
+drift_dev	Generate database code.
+very_good_analysis	Professional linting rules.
+Phase 2 — Flutter Fundamentals
+
+No additional dependencies.
+
+Focus on learning:
+
+Widgets
+Layouts
+Navigation
+Riverpod
+Project architecture
+Phase 3 — Calendar Functionality
+
+Install when beginning 3.4 Calendar Functionality.
+
+Dependency	Purpose
+table_calendar	Interactive calendar component.
+Phase 4 — Analytics Dashboard
+
+Install when building analytics.
+
+Dependency	Purpose
+fl_chart	Productivity charts and graphs.
+Phase 5 — Notifications
+
+Install when implementing reminders.
+
+Dependency	Purpose
+flutter_local_notifications	Local reminder notifications.
+timezone	Schedule notifications correctly.
+Phase 6 — Cloud Migration
+
+Install after the MVP is complete.
+
+Dependency	Purpose
+supabase_flutter	Authentication and cloud synchronization.
+Phase 7 — Machine Learning
+
+Install only when replacing the statistical prediction algorithm.
+
+Dependency	Purpose
+tflite_flutter (or another inference library)	Run trained models on-device.
+Packages Deferred
+
+These packages are intentionally not included in the MVP because they add complexity without providing immediate value while you're learning Flutter:
+
+freezed
+json_serializable
+equatable
+injectable
+get_it
+bloc
+
+They may be evaluated later if the project grows to a point where they provide clear benefits.
