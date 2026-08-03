@@ -1,0 +1,3 @@
+flutter pub upgrade
+flutter pub outdated
+flutter pub upgrade --major-versions
