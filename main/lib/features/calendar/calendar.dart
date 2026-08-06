@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CalendarPage extends StatelessWidget {
   const CalendarPage({super.key});
@@ -13,7 +14,7 @@ class CalendarPage extends StatelessWidget {
             TextButton(
               child: Text('Click Me'),
               onPressed:() {
-
+                context.go('/tasks');
               }
             ),
           ],
