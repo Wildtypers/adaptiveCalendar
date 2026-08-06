@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import '../calendar/calendar.dart';
+import 'package:main/features/calendar/calendar.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
