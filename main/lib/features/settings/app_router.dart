@@ -12,5 +12,5 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/tasks',
       builder: (context, state) => TasksPage(),
-    )
+    ),
   ]);
