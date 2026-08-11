@@ -7,24 +7,22 @@ class CalendarHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      padding: EdgeInsets.all(16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Calendar Header',
-            style: TextStyle(fontSize: 20, color: Colors.white),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              context.go('/tasks');
-            },
-            child: Text('Go to Tasks'),
-          ),
-        ],
-      ),
+    return SizedBox(
+      height: 64,
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Row(
+          children: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.chevron_left
+              ),
+            ),
+          ], 
+        ),
+      )
     );
   }
 }
