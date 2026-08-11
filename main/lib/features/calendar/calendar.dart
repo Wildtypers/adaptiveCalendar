@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:main/features/calendar/widgets/week_view.dart';
 
 class CalendarPage extends StatelessWidget {
   const CalendarPage({super.key});
@@ -10,13 +10,9 @@ class CalendarPage extends StatelessWidget {
       home: Scaffold(
         body: Column(
           children: [
-            Text('Hello World!'),
-            TextButton(
-              child: Text('Click Me'),
-              onPressed:() {
-                context.go('/tasks');
-              }
-            ),
+            CalendarHeader(),
+            Expanded(
+              child: WeekView(),)
           ],
         ),
       ),
