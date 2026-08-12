@@ -25,7 +25,12 @@ class CalendarHeader extends StatelessWidget {
               icon: Icon(
                 Icons.chevron_right
               ),
-            )
+            ),
+            const SizedBox(width: 16),
+
+            Text('August 10-16, 2026'),
+
+
           ], 
         ),
       )
