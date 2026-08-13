@@ -52,14 +52,29 @@ class WeekView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue[100],
-      child: Center(
-        child: Text(
-          'Week View',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return Column(
+      children: [
+        Row(
+          children: [
+            const SizedBox(width: 24),
+            ...[
+              'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
+            ].map((day) => Expanded(
+              child: Center(
+                child: Text(day),
+              ),
+            ))
+          ],
         ),
-      ),
+        Expanded(
+          child: Container(
+            color: Colors.grey[200],
+            child: Center(
+              child: Text('Week View Content'),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
