@@ -30,7 +30,16 @@ class CalendarHeader extends StatelessWidget {
 
             Text('August 10-16, 2026'),
 
+            Spacer(),
 
+            Text('Today'),
+
+            const SizedBox(width: 16),
+
+            ElevatedButton(
+              child: Text('Create Task'),
+              onPressed: () {},
+            ),
           ], 
         ),
       )
