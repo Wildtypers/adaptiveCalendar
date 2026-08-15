@@ -52,38 +52,40 @@ class WeekView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            const SizedBox(width: 24),
-            ...[
-              'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
-            ].map((day) => Expanded(
-              child: Column(
-                children: [
-                  Text(day),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              const SizedBox(width: 24),
+              ...[
+                'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
+              ].map((day) => Expanded(
+                child: Column(
+                  children: [
+                    Text(day),
 
-                  ...List.generate(20, (index) => 
-                    Row(
-                      children:[
-                        Expanded (
-                          child: Container(
-                            height: 60, 
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey[300]!),
-                            ),
+                    ...List.generate(24, (index) => 
+                      Row(
+                        children:[
+                          Expanded (
+                            child: Container(
+                              height: 60, 
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey[300]!),
+                              ),
+                            )
                           )
-                        )
-                      ]
+                        ]
+                      )
                     )
-                  )
-                ]
-              ),
-            ))
-          ],
-        ),
-      ],
+                  ]
+                ),
+              ))
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
