@@ -60,8 +60,22 @@ class WeekView extends StatelessWidget {
             ...[
               'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
             ].map((day) => Expanded(
-              child: Center(
-                child: Text(day),
+              child: Column(
+                children: [
+                  Text(day),
+                  Row(
+                    children:[
+                      Expanded (
+                        child: Container(
+                          height: 60, 
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey[300]!),
+                          ),
+                        )
+                      )
+                    ]
+                  )
+                ]
               ),
             ))
           ],
