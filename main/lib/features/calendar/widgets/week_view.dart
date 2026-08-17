@@ -38,7 +38,9 @@ class CalendarHeader extends StatelessWidget {
 
             ElevatedButton(
               child: Text('Create Task'),
-              onPressed: () {},
+              onPressed: () {
+                context.go('/tasks');
+              },
             ),
           ], 
         ),
